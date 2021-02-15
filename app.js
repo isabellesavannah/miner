@@ -9,7 +9,7 @@ let genMultiplier = 0
 var upgrades = {
     wallstreet:{
         quantity: 0,
-        cost: 15,
+        cost: 10,
         generator: 10
     },
     elon:{
@@ -33,7 +33,6 @@ let autoUpgrades = {
 }
 function mine(){
     bitcoin += 1
-    console.log(bitcoin)
     bitcoin += genMultiplier
     draw()
 }
@@ -46,6 +45,7 @@ function wallStreet(){
         bitcoin -= upgrades.wallstreet.cost
         upgrades.wallstreet.quantity ++
         upgrades.wallstreet.cost *= 5
+        // upgrades.wallstreet.generator *= 2
         genMultiplier += upgrades.wallstreet.generator
         console.log(genMultiplier)
         draw()
@@ -54,35 +54,51 @@ function wallStreet(){
     }
 }
 function elonMusk(){
-    if(bitcoin => 50){
-        bitcoin -=50
+    if(bitcoin >= upgrades.elon.cost){
+        bitcoin -= upgrades.elon.cost
+        upgrades.elon.quantity ++
+        upgrades.elon.cost *= 5
+        //upgrades.elon.generator *= 2
+        genMultiplier += upgrades.elon.generator
+        console.log(genMultiplier)
         draw()
     } else {
         alert("Not enough")
     }
-    elonQuant ++
-}
-function robinHood(){
-    if(bitcoin => 10000){
-        bitcoin -=10000
-        draw()
-    } else {
-        alert("Not enough")
-    }
-    rhQuant ++
-}
-function spaceX(){
-    if(bitcoin => 100){
-        bitcoin -=100
-        draw()
-    } else {
-        alert("Not enough")
-    }
-    spacexQuant ++
-}
-function startClock(){
     
 }
+function robinHood(){
+    if(bitcoin >= upgrades.robinhood.cost){
+        bitcoin -= upgrades.robinhood.cost
+        upgrades.robinhood.quantity ++
+        upgrades.robinhood.cost *= 5
+        //upgrades.robinhood.generator *= 2
+        genMultiplier += upgrades.robinhood.generator
+        console.log(genMultiplier)
+        draw()
+    } else {
+        alert("Not enough")
+    }
+    
+}
+function spaceX(){
+    
+    if(bitcoin >= autoUpgrades.spacex.cost){
+        bitcoin -= autoUpgrades.spacex.cost
+        autoUpgrades.spacex.quantity ++
+        autoUpgrades.spacex.cost *= 5
+        //autoUpgrades.spacex.generator *= 2
+        genMultiplier += autoUpgrades.spacex.generator
+        console.log(genMultiplier)
+        setInterval(mine, 3000)
+        //console.log(bitcoin)
+        draw()
+    } else {
+        alert("Not enough")
+    }
+    
+}
+
 // function mine(){
 //     for (let key in items) {
 //         let item = items[key]
@@ -94,9 +110,19 @@ function startClock(){
 function draw(){
     document.getElementById("currentBitcoins").innerHTML = `Bit Coins: ${bitcoin}`
     document.getElementById("wallstreet-q").innerHTML = `Quantity: ${upgrades.wallstreet.quantity}`
-    document.getElementById("elonQ").innerHTML = `Quantity: ${elonQuant}`
-    document.getElementById("rhQ").innerHTML = `Quantity: ${rhQuant}`
-    document.getElementById("spacexQ").innerHTML = `Quantity: ${spacexQuant}`
+    document.getElementById("elonQ").innerHTML = `Quantity: ${upgrades.elon.quantity}`
+    document.getElementById("rhQ").innerHTML = `Quantity: ${upgrades.robinhood.quantity}`
+    document.getElementById("spacexQ").innerHTML = `Quantity: ${autoUpgrades.spacex.quantity}`
+
+    document.getElementById("wallstreetCost").innerHTML = `Cost: ${upgrades.wallstreet.cost}`
+    document.getElementById("elonCost").innerHTML = `Cost: ${upgrades.elon.cost}`
+    document.getElementById("robinhoodCost").innerHTML = `Cost: ${upgrades.robinhood.cost}`
+    document.getElementById("spacexCost").innerHTML = `Cost: ${autoUpgrades.spacex.cost}`
+
+    document.getElementById("wallstreetGen").innerHTML = `BitCoin Generator: ${upgrades.wallstreet.generator}`
+    document.getElementById("elonGen").innerHTML = `BitCoin Generator: ${upgrades.elon.generator}`
+    document.getElementById("robinhoodGen").innerHTML = `BitCoin Generator: ${upgrades.robinhood.generator}`
+    document.getElementById("spacexGen").innerHTML = `BitCoin Generator: ${autoUpgrades.spacex.generator}`
 
 }
 draw()
