@@ -1,13 +1,15 @@
 let bitcoin = 1
-let wallstreetQuant = 1
-let elonQuant = 1
-let rhQuant = 1
-let spacexQuant = 1
+let genMultiplier = 0
+// let wallstreetQuant = 1
+// let elonQuant = 1
+// let rhQuant = 1
+// let spacexQuant = 1
+// let interval = 4000
 
 var upgrades = {
     wallstreet:{
         quantity: 0,
-        cost: 10,
+        cost: 15,
         generator: 10
     },
     elon:{
@@ -32,6 +34,7 @@ let autoUpgrades = {
 function mine(){
     bitcoin += 1
     console.log(bitcoin)
+    bitcoin += genMultiplier
     draw()
 }
 
@@ -39,16 +42,15 @@ function mine(){
 //increase purchased count
 //decrease resource count
 function wallStreet(){
-    if(_bitcoin => 10){
-        bitcoin -=10
+    if(bitcoin >= upgrades.wallstreet.cost){
+        bitcoin -= upgrades.wallstreet.cost
+        upgrades.wallstreet.quantity ++
+        upgrades.wallstreet.cost *= 5
+        genMultiplier += upgrades.wallstreet.generator
+        console.log(genMultiplier)
         draw()
     } else {
         alert("Not enough")
-    }
-    wallstreetQuant ++
-    function clickMod(){
-        bitcoin += 4
-        draw()
     }
 }
 function elonMusk(){
@@ -78,6 +80,9 @@ function spaceX(){
     }
     spacexQuant ++
 }
+function startClock(){
+    
+}
 // function mine(){
 //     for (let key in items) {
 //         let item = items[key]
@@ -85,11 +90,13 @@ function spaceX(){
 //         bitcoin += newCost
 //     }
 //     draw()
-//}
+// }
 function draw(){
     document.getElementById("currentBitcoins").innerHTML = `Bit Coins: ${bitcoin}`
-    document.getElementById("wallstreet-q").innerHTML = `Quantity: ${wallstreetQuant}`
+    document.getElementById("wallstreet-q").innerHTML = `Quantity: ${upgrades.wallstreet.quantity}`
     document.getElementById("elonQ").innerHTML = `Quantity: ${elonQuant}`
     document.getElementById("rhQ").innerHTML = `Quantity: ${rhQuant}`
     document.getElementById("spacexQ").innerHTML = `Quantity: ${spacexQuant}`
+
 }
+draw()
